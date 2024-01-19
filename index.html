@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html height="100%" width="100%">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Proof Calculus Library</title>
+  <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+</head>
+
+<body>
+  <h1>Library of Proof Calculi</h1>
+  <p>Many proof calculi appearing in papers on proof theory are not spelled out in the paper (e.g. only available in a referenced textbook), or glossed over via "we use the usual axioms and rules of derivation." This is a collection of explicitly defined finitary proof calculi appearing in literature on proof theory.</p>
+  <hr />
+  <h2>NF</h2>
+    <details>
+      <summary>Quine (1981)</summary>
+      <p>W. V. O. Quine, <i>Mathematical Logic</i> (1981) 0-674-55451-5, sections 28--29</p>
+      <p>Similar to the system appearing under Predicate calculus. Additional axioms are proposed, but I will not include those slight modifications on this page. The original text had many shorthands, many of those have been reduced here.</p>
+      <p>This is a Hilbert-style system, so a proof is a sequence of formulae, each entry is either an axiom or follows from previous entries via a rule of inference.</p>
+      <h3>Axioms</h3>
+      <ul>
+        <li>Universal closures of all tautologous formulae</li>
+        <li>Universal closures of all formulae of the form \(\forall a(\phi\rightarrow\psi)\rightarrow((\forall a\phi)\rightarrow(\forall a\psi)\)</li>
+        <li>Universal closures of all formulae of the form \(\phi\rightarrow\forall x(\phi)\), where \(x\) is not a free variable in \(\phi\)</li>
+        <li>Universal closures of all formulae of the form \(\forall x(\phi)\rightarrow \phi'\), where \(\phi'\) is \(\phi\) but with all instances of \(x\) which are free replaced with a new variable symbol \(x'\)</li>
+        <li>Universal closures of formulae of the form \(\forall b_1,\ldots,b_n(b_1,\ldots,b_n\in V\rightarrow\exists c(\forall g(g\in c\leftrightarrow\exists h(g\in h\land\forall a(a\in h\rightarrow\phi)))\land c\in V))\) where \((b_i)_{i\lt n\in\mathbb N}\) enumerates the free variables of \(\phi\), which is a stratified formula. (Note: the most expansion of shorthands occurred when writing out this axiom. The most "important" free var of \(\phi\) should be \(a\))</li>
+        <li>Universal closures of formulae of the form \(x=x'\rightarrow(\phi\rightarrow\phi')\), where \(\phi'\) is \(\phi\) with all instances of \(x\) replaced with \(x'\)</li>
+        <li>Universal closures of formulae of the form \(\exists b\forall a(a\in b\leftrightarrow(a=a\land\phi))\),
+          <!--The a=a comes from "a in V"--> where the variable symbol \(a\) is not free in \(\phi\) nor equal to the variable symbol \(a\)
+        </li>
+      </ul>
+      <h3>Rules of inference</h3>
+      <ul>
+        <li>Modus ponens</li>
+      </ul>
+    </details>
+  <h2>ZFC</h2>
+  <h2>Peano arithmetic</h2>
+    <p>Uppercase Latin letters are single formulae, uppercase Greek letters are sets of formulae.</p>
+    <details>
+      <summary>Takeuti (1987)</summary>
+      <p>This is described as system <b>LK</b>. Old notation \(\supset\) used for material implication to avoid confusion with the sequent symbol \(\rightarrow\). Prime is used for successorship.</p>
+      <h3>Axioms</h3>
+      <ul>
+        <li>\(\phi\rightarrow\phi\) for each formula \(\phi\)</li>
+        <li>\(\rightarrow s=s\) for any term \(s\)</li>
+        <li>s_1=t_1,\ldots,s_n=t_n\rightarrow f(s_1,\ldots,s_n)=f(t_1,\ldots,t_n) for any terms \(s_1,t_1,\ldots,s_n,t_n\) and any function symbol \(f\)</li>
+        <li>s_1=t_1,\ldots,s_n=t_n,R(s_1,\ldots,s_n)\rightarrow R(t_1,\ldots,t_n) for any terms \(s_1,t_1,\ldots,s_n,t_n\) and any relation symbol \(R\) (including \(=\))</li>
+        <li>\(s'=t'\rightarrow s=t\)</li>
+        <li>\(s'=0\rightarrow\)</li>
+        <li>\(\rightarrow s+0=s\)</li>
+        <li>\(\rightarrow s+t'=(s+t)'\)</li>
+        <li>\(\rightarrow s\cdot 0=0\)</li>
+        <li>\(\rightarrow s\cdot t'=s\cdot t+s\)</li>
+      </ul>
+      <h3>Rules of Inference</h3>
+      <ul>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta$}
+          \RightLabel{(weakening left)}
+          \UnaryInfC{$D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta$}
+          \RightLabel{(weakening right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$D,D,\Gamma\rightarrow\Delta$}
+          \RightLabel{(contraction left)}
+          \UnaryInfC{$D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,D,D$}
+          \RightLabel{(contraction right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,C,D,\Pi\rightarrow\Delta$}
+          \RightLabel{(exchange left)}
+          \UnaryInfC{$\Gamma,D,C,\Pi\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,C,D,\Lambda$}
+          \RightLabel{(exchange right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,D,C\Lambda$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,D$}\AxiomC{$D,\Pi\rightarrow\Lambda$}
+          \RightLabel{(cut)}
+          \BinaryInfC{$\Gamma,\Pi\rightarrow\Delta,\Lambda$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,D$}
+          \RightLabel{($\lnot$ left)}
+          \UnaryInfC{$\lnot D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$D,\Gamma\rightarrow\Delta$}
+          \RightLabel{($\lnot$ right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,\lnot D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$C,\Gamma\rightarrow\Delta$}
+          \RightLabel{($\land$ left rule 1)}
+          \UnaryInfC{$C\land D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$D,\Gamma\rightarrow\Delta$}
+          \RightLabel{($\land$ left rule 2)}
+          \UnaryInfC{$C\land D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,C$}\AxiomC{$\Gamma\rightarrow\Delta,D$}
+          \RightLabel{($\land$ right)}
+          \BinaryInfC{$\Gamma\rightarrow\Delta,C\land D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$C,\Gamma\rightarrow\Delta$}\AxiomC{$D,\Gamma\rightarrow\Delta$}
+          \RightLabel{($\lor$ left)}
+          \BinaryInfC{$C\lor D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,C$}
+          \RightLabel{($\lor$ right rule 1)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,C\lor D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,D$}
+          \RightLabel{($\lor$ right rule 2)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,C\lor D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,C$}\AxiomC{$D,\Pi\rightarrow\Lambda$}
+          \RightLabel{($\supset$ left)}
+          \BinaryInfC{$C\supset D,\Gamma,\Pi\rightarrow\Delta,\Lambda$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$C,\Gamma\rightarrow\Delta,D$}
+          \RightLabel{($\supset$ right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,C\supset D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$F(t),\Gamma\rightarrow\Delta$}
+          \RightLabel{($\forall$ left)}
+          \UnaryInfC{$\forall xF(x),\Gamma\rightarrow\Delta$}\end{prooftree} where \(t\) is any term</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,F(a)$}
+          \RightLabel{($\forall$ right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,\forall xF(x)$}\end{prooftree} where \(a\) does not occur in \(\Gamma\rightarrow\Delta,\forall xF(x)\)</li>
+        <li>\begin{prooftree}\AxiomC{$F(a),\Gamma\rightarrow\Delta$}
+          \RightLabel{($\exists$ left)}
+          \UnaryInfC{$\exists xF(x),\Gamma\rightarrow\Delta$}\end{prooftree} where \(a\) does not occur in \(\exists xF(x),\Gamma\rightarrow\Delta\)</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,F(t)$}
+          \RightLabel{($\exists$ right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,\exists xF(x)$}\end{prooftree} where \(t\) is any term</li>
+        <li>\begin{prooftree}\AxiomC{$F(a),\Gamma\rightarrow\Delta,F(a')$}
+          \RightLabel{(Ind)}
+          \UnaryInfC{$F(0),\Gamma\rightarrow\Delta,F(s)$}\end{prooftree} where \(F(a)\) is any formula of the language, \(s\) is any term, and \(a\) does not appear in \(F(0), \(\Gamma\), or \(\Delta\)</li>
+      </ul>
+    </details>
+    <details>
+      <summary>Pohlers (1989)</summary>
+      <p><i>Proof Theory: An Introduction</i></p>
+      <p>A conservative extension Z<sub>1</sub> of this system is also included, which includes function symbols for all primitive recursive functions?</p>
+      <p>Let \(\phi_x(y)\) be the formula \(\phi\) with all instances of the var symbol \(x\) replaced by \(y\).</p>
+      <p>An underlined \(n\) is the term for the natural number \(n\) (this includes an underlined \(Sn\).) I have used \(S\) to denote the function symbol the source denotes \(\underline S\), in order to reserve underlined text for the preceding terms.</p>
+      <h3>Axioms:</h3>
+      <ul>
+        <li>All "sententially valid formulae" (\(\phi\) where when \(\phi\)'s atomic subformulae are evaluated w.r.t. any assignment \(\{\chi\mid\chi\textrm{ atomic or of the form }\forall x\psi(x),\;\exists x\psi(x)\}\to\{\top,\bot\}\), \(\phi\) is true)</li>
+        <li>All formulae of the form \(\lnot\forall x(A)\lor A_x(t)\) or \(\lnot A_x(t)\lor\exists x(A)\)</li>
+        <li>\(\forall x(x=x)\)</li>
+        <li>\(\forall x\forall y(x=y\rightarrow y=x)\)</li>
+        <li>\(\forall x\forall y\forall z(x=y\land y=z\rightarrow x=z)\)</li>
+        <li>\(\forall x\forall y(x=y\rightarrow(F\rightarrow F_x(y)))\)</li>
+        <li>\(\forall x(\lnot\underline 0=Sx)\)</li>
+        <li>\(\forall x\forall y(Sx=Sy\rightarrow x=y)\)</li>
+        <li>\(\underline{Sn}=S\underline n\) for each \(n\in\mathbb N\)</li>
+        <li>The schema \((A_x(0)\land\forall y(A_x(y)\rightarrow A_x(Sy)))\rightarrow\forall xA\)</li>
+      </ul>
+      <h3>Rules of inference:</h3>
+      <ul>
+        <li>\(A,\lnot A\lor B\vdash B\) (modus ponens)</li>
+        <li>\(\lnot A\lor B\vdash\lnot A\lnot \forall xB\)</li>
+        <li>\(\lnot B\lor A\vdash\lnot\exists xB\lor A\)</li>
+      </ul>
+    </details>
+    <details>
+      <summary>Buchholz, Wainer (1987)</summary>
+      <a href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.659.2015&rep=rep1&type=pdf#page=8">Provably
+        computable functions and the fast-growing hierarchy</a>
+      <p>Finite sequences of formulae \(A_1,\ldots,A_k\) are intended to mean the disjunction \(A_1\lor\ldots\lor A_k\). \(\Gamma,A\) is intended to mean \(\Gamma\cup\{A\}\), e.g. \(\Gamma,x=x\) is intended to mean \(\Gamma\cup\{x=x\}\).</p>
+      <h3>Axioms:</h3>
+      <ul>
+        <li>\(\Gamma,\lnot A,A\) for every formula \(A\)</li>
+        <li>\(\Gamma,x=x\)</li>
+        <li>\(\Gamma,x\neq y,y=x\)</li>
+        <li>\(\Gamma,x\neq y,y\neq z,x=z\)</li>
+        <li>\(\Gamma,Sx\neq 0\)</li>
+        <li>\(\Gamma,Sx\neq Sy,x=y\)</li>
+        <li>\(\Gamma,x\neq y,Sx=Sy\)</li>
+        <li>(Similar axioms defining the behavior of elementary functions)</li>
+        <li>\(\Gamma,\lnot A(0),\exists x(A(x)\land\lnot A(Sx)),\forall xA(x)\) for every formula \(A\)</li>
+      </ul>
+      <h2>Rules of inference:</h2>
+      <ul>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,A_0$}
+          \AxiomC{$\Gamma,A_1$}
+          \RightLabel{($\land$)}
+          \BinaryInfC{$\Gamma,(A_0\land A_1)$}\end{prooftree}
+        </li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,A_i$}
+          \RightLabel{($\lor$)}
+          \UnaryInfC{$\Gamma,(A_0\lor A_1)$}\end{prooftree}, i is one of 0 or 1
+        </li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,A(x)$}
+          \RightLabel{($\forall$)}
+          \UnaryInfC{$\Gamma,\forall x A(x)$}\end{prooftree}, x not free in Gamma
+        </li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,A(t)$}
+          \RightLabel{($\exists$)}
+          \UnaryInfC{$\Gamma,\exists x A(x)$}\end{prooftree}
+        </li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,\lnot A$}
+          \AxiomC{$\Gamma,A$}
+          \RightLabel{(Cut)}
+          \BinaryInfC{$\Gamma$}\end{prooftree}
+        </li>
+      </ul>
+    </details>
+    <details>
+      <summary>Kleene (1971)</summary>
+      <p>The presentation in Kleene's <i>Introduction to Metamathematics</i> (1971)</p>
+      Find tree presentation/rules of inference?
+    </details>
+  <h2>PA<sub>k</sub></h2>
+    <details>
+      <summary>Rathjen, Carnielli (1991)</summary>
+      <p><a href="https://www1.maths.leeds.ac.uk/~rathjen/HydraeSubArith.pdf">Hydrae and Subsystems of Arithmetic</a></p>
+      <p>Finite sequences of formulae \(A_1,\ldots,A_k\) are intended to mean the disjunction \(A_1\lor\ldots\lor A_k\).\(\Gamma,A\) is intended to mean \(\Gamma\cup\{A\}\), e.g. \(\Gamma,x=x\) is intended to mean \(\Gamma\cup\{x=x\}\)</p>
+      <h3>Axioms</h3>
+      <ul>
+        <li>\(\Gamma,\lnot A,A\) for every \(\Sigma_k^0\) formula \(A\)</li>
+        <li>\(\Gamma,x=x\)</li>
+        <li>\(\Gamma,x\neq y,y=x\)</li>
+        <li>\(\Gamma,x\neq y,y\neq z,x=z\)</li>
+        <li>\(\Gamma,Sx\neq 0\)</li>
+        <li>\(\Gamma,Sx\neq Sy,x=y\)</li>
+        <li>\(\Gamma,x\neq y,Sx=Sy\)</li>
+        <li>(Similar axioms defining the behavior of elementary functions)</li>
+      </ul>
+      <h3>Rules of inference</h3>
+      <ul>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,A$}
+          \AxiomC{$\Gamma,B$}
+          \RightLabel{($\land$)}
+          \BinaryInfC{$\Gamma,A\land B$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,A$}
+          \RightLabel{($\lor$ rule 1)}
+          \UnaryInfC{$\Gamma,A\lor B$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,B$}
+          \RightLabel{($\lor$ rule 2)}
+          \UnaryInfC{$\Gamma,A\lor B$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,A(x)$}
+          \RightLabel{($\forall$)}
+          \UnaryInfC{$\Gamma,\forall xA(x)$}\end{prooftree}, where \(x\) is not free in \(\Gamma\)</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,A(t)$}
+          \RightLabel{($\exists$)}
+          \UnaryInfC{$\Gamma,\exists xA(x)$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,\lnot(x\lt t),A(x)$}
+          \RightLabel{(b$\forall$)}
+          \UnaryInfC{$\Gamma,\forall(x\lt t)A(x)$}\end{prooftree}, for any term $t$, and $x$ not appearing in $t$</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,(s\lt t)\land A(s)$}
+          \RightLabel{(b$\forall$)}
+          \UnaryInfC{$\Gamma,\exists(x\lt t)A(x)$}\end{prooftree}, for any term $t$, and $x$ not appearing in $t$</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\exists xB(0,x)$}
+          \AxiomC{$\Gamma,\forall x\lnot B(y,x),\exists xB(S(y),x)$}
+          \RightLabel{($\Sigma_k$-Ind)}
+          \BinaryInfC{$\Gamma,\exists xB(t,x)$}\end{prooftree}, where $\exists xB(0,x)$ is $\Sigma_k^0$, $y$ and $x$ are distinct, and $y$ does not occur free in $\Gamma$</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,A$}
+          \AxiomC{$\Gamma,\lnot A$}
+          \RightLabel{(cut)}
+          \BinaryInfC{$\Gamma$}\end{prooftree}</li>
+      </ul>
+    </details>
+  <h2>Predicate calculus with equality</h2>
+    <p>Should <a href="https://en.wikipedia.org/wiki/Begriffsschrift">Begriffsschrift</a> go here?</p>
+    <details>
+      <summary>Takeuti (1987)</summary>
+      <p>This is described as system <b>LK</b>. Old notation \(\supset\) used for material implication to avoid confusion with the sequent symbol \(\rightarrow\).</p>
+      <h3>Axioms</h3>
+      <ul>
+        <li>\(\phi\rightarrow\phi\) for each formula \(\phi\)</li>
+        <li>\(\rightarrow s=s\) for any term \(s\)</li>
+        <li>$s_1=t_1,\ldots,s_n=t_n\rightarrow f(s_1,\ldots,s_n)=f(t_1,\ldots,t_n)$ for any terms \(s_1,t_1,\ldots,s_n,t_n\) and any function symbol \(f\)</li>
+        <li>$s_1=t_1,\ldots,s_n=t_n,R(s_1,\ldots,s_n)\rightarrow R(t_1,\ldots,t_n)$ for any terms \(s_1,t_1,\ldots,s_n,t_n\) and any relation symbol \(R\) (including \(=\))</li>
+      </ul>
+      <h3>Rules of Inference</h3>
+      <ul>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta$}
+          \RightLabel{(weakening left)}
+          \UnaryInfC{$D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta$}
+          \RightLabel{(weakening right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$D,D,\Gamma\rightarrow\Delta$}
+          \RightLabel{(contraction left)}
+          \UnaryInfC{$D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,D,D$}
+          \RightLabel{(contraction right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,C,D,\Pi\rightarrow\Delta$}
+          \RightLabel{(exchange left)}
+          \UnaryInfC{$\Gamma,D,C,\Pi\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,C,D,\Lambda$}
+          \RightLabel{(exchange right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,D,C\Lambda$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,D$}
+          \AxiomC{$D,\Pi\rightarrow\Lambda$}
+          \RightLabel{(cut)}
+          \BinaryInfC{$\Gamma,\Pi\rightarrow\Delta,\Lambda$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,D$}
+          \RightLabel{($\lnot$ left)}
+          \UnaryInfC{$\lnot D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$D,\Gamma\rightarrow\Delta$}
+          \RightLabel{($\lnot$ right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,\lnot D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$C,\Gamma\rightarrow\Delta$}
+          \RightLabel{($\land$ left rule 1)}
+          \UnaryInfC{$C\land D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$D,\Gamma\rightarrow\Delta$}
+          \RightLabel{($\land$ left rule 2)}
+          \UnaryInfC{$C\land D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,C$}
+          \AxiomC{$\Gamma\rightarrow\Delta,D$}
+          \RightLabel{($\land$ right)}
+          \BinaryInfC{$\Gamma\rightarrow\Delta,C\land D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$C,\Gamma\rightarrow\Delta$}
+          \AxiomC{$D,\Gamma\rightarrow\Delta$}
+          \RightLabel{($\lor$ left)}
+          \BinaryInfC{$C\lor D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,C$}
+          \RightLabel{($\lor$ right rule 1)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,C\lor D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,D$}
+          \RightLabel{($\lor$ right rule 2)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,C\lor D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,C$}
+          \AxiomC{$D,\Pi\rightarrow\Lambda$}
+          \RightLabel{($\supset$ left)}
+          \BinaryInfC{$C\supset D,\Gamma,\Pi\rightarrow\Delta,\Lambda$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$C,\Gamma\rightarrow\Delta,D$}
+          \RightLabel{($\supset$ right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,C\supset D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$F(t),\Gamma\rightarrow\Delta$}
+          \RightLabel{($\forall$ left)}
+          \UnaryInfC{$\forall xF(x),\Gamma\rightarrow\Delta$}\end{prooftree} where \(t\) is any term</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,F(a)$}
+          \RightLabel{($\forall$ right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,\forall xF(x)$}\end{prooftree} where \(a\) does not occur in \(\Gamma\rightarrow\Delta,\forall xF(x)\)</li>
+        <li>\begin{prooftree}\AxiomC{$F(a),\Gamma\rightarrow\Delta$}
+          \RightLabel{($\exists$ left)}
+          \UnaryInfC{$\exists xF(x),\Gamma\rightarrow\Delta$}\end{prooftree} where \(a\) does not occur in \(\exists xF(x),\Gamma\rightarrow\Delta\)</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,F(t)$}
+          \RightLabel{($\exists$ right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,\exists xF(x)$}\end{prooftree} where \(t\) is any term</li>
+      </ul>
+    </details>
+    <details>
+      <summary>Kunen (2007)</summary>
+      <p>Kunen, <a href="https://people.math.wisc.edu/~awmille1/old/m771-10/kunen770.pdf"><i>The Foundations of Mathematics</i></a> (2007, draft version), section II.10</p>
+      <p>This is a Hilbert-style system, so a proof is a sequence of formulae, each entry is either an axiom or follows from previous entries via a rule of inference.</p>
+      <p>When \(\varphi\) is a formula with free variable \(x\) and \(\tau\) is a term, \(\varphi(x\rightsquigarrow\tau)\) is \(\varphi\) with all appearances of \(x\) replaced with \(\tau\).</p>
+      <h3>Axioms:</h3>
+      <ul>
+        <li>Propositional tautologies</li>
+        <li>Formulae of the form \(\phi\rightarrow\forall x\phi\) where \(x\) not free in \(\phi\)</li>
+        <li>Formulae of the form \(\forall x(\phi\rightarrow\psi)\rightarrow((\forall x\phi)\rightarrow(\forall x\psi)\)
+        </li>
+        <li>Formulae of the form \((\forall x\phi)\rightarrow\phi(x\rightsquigarrow\tau\), where \(x\) is free in \(\phi\) and \(\tau\) is any term</li>
+        <li>Formulae of the form \(\phi(x\rightsquigarrow\tau)\rightarrow\exists x\phi\), where \(x\) is free in \(\phi\) and \(\tau\) is any term</li>
+        <li>Formulae of the form \((\forall x\lnot\phi)\leftrightarrow\lnot\exists x\phi\)</li>
+        <li>\(x=x\)</li>
+        <li>\(x=y\leftrightarrow y=x\)</li>
+        <li>\(x=y\land y=z\rightarrow x=z\)</li>
+        <li>\(x_1=y_1\land\ldots\land x_n=y_n\rightarrow(f(x_1,\ldots,x_n)=f(y_1,\ldots,y_n))\) for any \(n>0\), where \(f\) is an \(n\)-place function symbol in this language</li>
+        <li>\(x_1=y_1\land\ldots\land x_n=y_n\rightarrow(p(x_1,\ldots,x_n)\leftrightarrow p(y_1,\ldots,y_n))\) for any \(n>0\), where \(p\) is an \(n\)-place relation symbol in this language</li>
+      </ul>
+      <h3>Rules of inference:</h3>
+      <ul>
+        <li>Modus ponens</li>
+      </ul>
+    </details>
+  <h2>Second-order predicate calculus</h2>
+    <details>
+      <summary>Takeuti (1987)</summary>
+      <p>This is described as system <b>LK</b>. Old notation \(\supset\) used for material implication to avoid confusion with the sequent symbol \(\rightarrow\).</p>
+      <h3>Axioms</h3>
+      <ul>
+        <li>\(\phi\rightarrow\phi\) for each formula \(\phi\)</li>
+      </ul>
+      <h3>Rules of Inference</h3>
+      <ul>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta$}
+          \RightLabel{(weakening left)}
+          \UnaryInfC{$D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta$}
+          \RightLabel{(weakening right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$D,D,\Gamma\rightarrow\Delta$}
+          \RightLabel{(contraction left)}
+          \UnaryInfC{$D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,D,D$}
+          \RightLabel{(contraction right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,C,D,\Pi\rightarrow\Delta$}
+          \RightLabel{(exchange left)}
+          \UnaryInfC{$\Gamma,D,C,\Pi\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,C,D,\Lambda$}
+          \RightLabel{(exchange right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,D,C\Lambda$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,D$}
+          \AxiomC{$D,\Pi\rightarrow\Lambda$}
+          \RightLabel{(cut)}
+          \BinaryInfC{$\Gamma,\Pi\rightarrow\Delta,\Lambda$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,D$}
+          \RightLabel{($\lnot$ left)}
+          \UnaryInfC{$\lnot D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$D,\Gamma\rightarrow\Delta$}
+          \RightLabel{($\lnot$ right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,\lnot D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$C,\Gamma\rightarrow\Delta$}
+          \RightLabel{($\land$ left rule 1)}
+          \UnaryInfC{$C\land D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$D,\Gamma\rightarrow\Delta$}
+          \RightLabel{($\land$ left rule 2)}
+          \UnaryInfC{$C\land D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,C$}
+          \AxiomC{$\Gamma\rightarrow\Delta,D$}
+          \RightLabel{($\land$ right)}
+          \BinaryInfC{$\Gamma\rightarrow\Delta,C\land D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$C,\Gamma\rightarrow\Delta$}
+          \AxiomC{$D,\Gamma\rightarrow\Delta$}
+          \RightLabel{($\lor$ left)}
+          \BinaryInfC{$C\lor D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,C$}
+          \RightLabel{($\lor$ right rule 1)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,C\lor D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,D$}
+          \RightLabel{($\lor$ right rule 2)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,C\lor D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,C$}
+          \AxiomC{$D,\Pi\rightarrow\Lambda$}
+          \RightLabel{($\supset$ left)}
+          \BinaryInfC{$C\supset D,\Gamma,\Pi\rightarrow\Delta,\Lambda$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$C,\Gamma\rightarrow\Delta,D$}
+          \RightLabel{($\supset$ right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,C\supset D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$F(t),\Gamma\rightarrow\Delta$}
+          \RightLabel{(first-order $\forall$ left)}
+          \UnaryInfC{$\forall xF(x),\Gamma\rightarrow\Delta$}\end{prooftree} where \(t\) is any term</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,F(a)$}
+          \RightLabel{(first-order $\forall$ right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,\forall xF(x)$}\end{prooftree} where \(a\) does not occur in \(\Gamma\rightarrow\Delta,\forall xF(x)\)</li>
+        <li>\begin{prooftree}\AxiomC{$F(a),\Gamma\rightarrow\Delta$}
+          \RightLabel{(first-order $\exists$ left)}
+          \UnaryInfC{$\exists xF(x),\Gamma\rightarrow\Delta$}\end{prooftree} where \(a\) does not occur in \(\exists xF(x),\Gamma\rightarrow\Delta\)</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,F(t)$}
+          \RightLabel{(first-order $\exists$ right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,\exists xF(x)$}\end{prooftree} where \(t\) is any term</li>
+        <li>\begin{prooftree}\AxiomC{$F(R),\Gamma\rightarrow\Delta$}
+          \RightLabel{(second-order $\forall$ left)}
+          \UnaryInfC{$\forall\varphi F(\varphi),\Gamma\rightarrow\Delta$}\end{prooftree} where \(R\) is any second-order free variable or predicate, and \(\phi\) has the same number of parameters as \(R\)</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,F(\alpha)$}
+          \RightLabel{(second-order $\forall$ right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,\forall\varphi F(\varphi)$}\end{prooftree} where \(\alpha\) is a second-order free variable which does not occue in \(\Gamma\rightarrow\Delta,\forall\varphi F(\varphi)\), and \(\phi\) has is a second-order bound variable with the same number of parameters as \(\alpha\)</li>
+        <li>\begin{prooftree}\AxiomC{$F(\alpha),\Gamma\rightarrow\Delta$}
+          \RightLabel{(second-order $\exists$ left)}
+          \UnaryInfC{$\exists\varphi F(\varphi),\Gamma\rightarrow\Delta$}\end{prooftree} where \(\alpha\) is a second-order free variable which does not occue in \(\Gamma\rightarrow\Delta,\forall\varphi F(\varphi)\), and \(\phi\) has is a second-order bound variable with the same number of parameters as \(\alpha\)</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,F(R)$}
+          \RightLabel{(second-order $\exists$ right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,\exists \varphi F(\varphi)$}\end{prooftree} where \(R\) is any second-order free variable or predicate, and \(\phi\) has the same number of parameters as \(R\)</li>
+      </ul>
+    </details>
+  <h2>Predicate calculus</h2>
+    <p>Using a first-order language that may have relation symbols, these theories have no specific axioms about how the relation symbols
+      behave.</p>
+    <details>
+      <summary>Wainer, Wallen (1993)</summary>
+      <p>Appearing in <i>Proof Theory: A selection of papers from the Leeds Proof Theory Programme 1990</i>, published 1993. Finite sequences of formulae \(A_1,\ldots,A_k\) are intended to mean the disjunction \(A_1\lor\ldots\lor A_k\). \(\Gamma,A\) is intended to mean \(\Gamma\cup\{A\}\), e.g. \(\Gamma,x=x\) is intended to mean \(\Gamma\cup\{x=x\}\)</p>
+      <h3>Axioms</h3>
+      <ul>
+        <li>\(P(x_{i_1},\ldots,x_{i_k}),\lnot P(x_{i_1},\ldots,x_{i_k})\)</li>
+      </ul>
+      <h3>Rules of Inference</h3>
+      <ul>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,A_0,A_1$}
+          \RightLabel{($\lor$)}
+          \UnaryInfC{$\Gamma,(A_0\lor A_1)$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,A_0$}
+          \AxiomC{$\Delta,A_1$}
+          \RightLabel{($\land$)}
+          \BinaryInfC{$\Gamma,\Delta,(A_0\land A_1)$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,A(x')$}
+          \RightLabel{($\exists$)}
+          \UnaryInfC{$\Gamma,\exists xA(x)$}\end{prooftree}, where \(x'\) is not free in \(\Gamma\)</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,A(x')$}
+          \RightLabel{($\forall$)}
+          \UnaryInfC{$\Gamma,\forall xA(x)$}\end{prooftree}, where \(x'\) is not free in \(\Gamma\)</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,A,A$}
+          \RightLabel{(C)}
+          \UnaryInfC{$\Gamma,A$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma$}
+          \RightLabel{(W)}
+          \UnaryInfC{$\Gamma,A$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,C$}
+          \AxiomC{$\Delta,\lnot C$}
+          \RightLabel{(Cut)}
+          \BinaryInfC{$\Gamma,\Delta$}\end{prooftree}</li>
+      </ul>
+    </details>
+    <details>
+      <summary>Quine (1981)</summary>
+      <p>W. V. O. Quine, <i>Mathematical Logic</i> (1981) 0-674-55451-5, sections 15--16</p>
+      <p>This is a Hilbert-style system, so a proof is a sequence of formulae, each entry is either an axiom or follows
+        from previous entries via a rule of inference.</p>
+      <h3>Axioms</h3>
+      <ul>
+        <li>Universal closures of all tautological formulae</li>
+        <li>Universal closures of all formulae of the form \(\forall a(\phi\rightarrow\psi)\rightarrow((\forall a\phi)\rightarrow(\forall a\psi)\)</li>
+        <li>Universal closures of all formulae of the form \(\phi\rightarrow\forall x(\phi)\), where \(x\) is not a free variable in \(\phi\)</li>
+        <li>Universal closures of all formulae of the form \(\forall x(\phi)\rightarrow \phi'\), where \(\phi'\) is \(\phi\) but with all instances of \(x\) which are free replaced with a new variable symbol \(x'\)</li>
+      </ul>
+      <h3>Rules of inference</h3>
+      <ul>
+        <li>Modus ponens</li>
+      </ul>
+    </details>
+    <details>
+      <summary>Takeuti (1987)</summary>
+      <p>This is described as system <b>LK</b>. Old notation \(\supset\) used for material implication to avoid confusion with the sequent symbol \(\rightarrow\).</p>
+      <h3>Axioms</h3>
+      <ul>
+        <li>\(\phi\rightarrow\phi\) for each formula \(\phi\)</li>
+      </ul>
+      <h3>Rules of Inference</h3>
+      <ul>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta$}
+          \RightLabel{(weakening left)}
+          \UnaryInfC{$D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta$}
+          \RightLabel{(weakening right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$D,D,\Gamma\rightarrow\Delta$}
+          \RightLabel{(contraction left)}
+          \UnaryInfC{$D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,D,D$}
+          \RightLabel{(contraction right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma,C,D,\Pi\rightarrow\Delta$}
+          \RightLabel{(exchange left)}
+          \UnaryInfC{$\Gamma,D,C,\Pi\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,C,D,\Lambda$}
+          \RightLabel{(exchange right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,D,C\Lambda$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,D$}
+          \AxiomC{$D,\Pi\rightarrow\Lambda$}
+          \RightLabel{(cut)}
+          \BinaryInfC{$\Gamma,\Pi\rightarrow\Delta,\Lambda$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,D$}
+          \RightLabel{($\lnot$ left)}
+          \UnaryInfC{$\lnot D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$D,\Gamma\rightarrow\Delta$}
+          \RightLabel{($\lnot$ right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,\lnot D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$C,\Gamma\rightarrow\Delta$}
+          \RightLabel{($\land$ left rule 1)}
+          \UnaryInfC{$C\land D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$D,\Gamma\rightarrow\Delta$}
+          \RightLabel{($\land$ left rule 2)}
+          \UnaryInfC{$C\land D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,C$}
+          \AxiomC{$\Gamma\rightarrow\Delta,D$}
+          \RightLabel{($\land$ right)}
+          \BinaryInfC{$\Gamma\rightarrow\Delta,C\land D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$C,\Gamma\rightarrow\Delta$}
+          \AxiomC{$D,\Gamma\rightarrow\Delta$}
+          \RightLabel{($\lor$ left)}
+          \BinaryInfC{$C\lor D,\Gamma\rightarrow\Delta$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,C$}
+          \RightLabel{($\lor$ right rule 1)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,C\lor D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,D$}
+          \RightLabel{($\lor$ right rule 2)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,C\lor D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,C$}
+          \AxiomC{$D,\Pi\rightarrow\Lambda$}
+          \RightLabel{($\supset$ left)}
+          \BinaryInfC{$C\supset D,\Gamma,\Pi\rightarrow\Delta,\Lambda$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$C,\Gamma\rightarrow\Delta,D$}
+          \RightLabel{($\supset$ right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,C\supset D$}\end{prooftree}</li>
+        <li>\begin{prooftree}\AxiomC{$F(t),\Gamma\rightarrow\Delta$}
+          \RightLabel{($\forall$ left)}
+          \UnaryInfC{$\forall xF(x),\Gamma\rightarrow\Delta$}\end{prooftree} where \(t\) is any term</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,F(a)$}
+          \RightLabel{($\forall$ right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,\forall xF(x)$}\end{prooftree} where \(a\) does not occur in \(\Gamma\rightarrow\Delta,\forall xF(x)\)</li>
+        <li>\begin{prooftree}\AxiomC{$F(a),\Gamma\rightarrow\Delta$}
+          \RightLabel{($\exists$ left)}
+          \UnaryInfC{$\exists xF(x),\Gamma\rightarrow\Delta$}\end{prooftree} where \(a\) does not occur in \(\exists xF(x),\Gamma\rightarrow\Delta\)</li>
+        <li>\begin{prooftree}\AxiomC{$\Gamma\rightarrow\Delta,F(t)$}
+          \RightLabel{($\exists$ right)}
+          \UnaryInfC{$\Gamma\rightarrow\Delta,\exists xF(x)$}\end{prooftree} where \(t\) is any term</li>
+      </ul>
+    </details>
+  <script>
+    MathJax = {
+      loader: {load: ['[tex]/bussproofs']},
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        packages: {'[+]': ['bussproofs']}
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
+</body>
+
+</html>
